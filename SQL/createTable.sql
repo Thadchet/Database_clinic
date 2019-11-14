@@ -118,18 +118,18 @@ CREATE TABLE ListOfProcedure(
     FOREIGN KEY (Nurse_ID) REFERENCES Nurse(Nurse_ID)
 );
 
-CREATE TABLE ListOfProcedure_ID(
-    ListOfMedProcedure_ID char(6) ,
-    MedProcedure_ID_List char(6) ,
-    FOREIGN KEY (MedProcedure_ID_List) REFERENCES Medprocedure(Medprocedure_ID),
-    CONSTRAINT pk_ListOfProcedure_ID PRIMARY KEY (ListOfMedProcedure_ID , MedProcedure_ID_List)
-);
-
 CREATE TABLE Medprocedure(
     Medprocedure_ID char(6) PRIMARY KEY,
     Medprocedure_Name char(30) ,
     Medprocedure_Discription varchar(2000),
     Price float(6) 
+);
+
+CREATE TABLE ListOfProcedure_ID(
+    ListOfMedProcedure_ID char(6) ,
+    MedProcedure_ID_List char(6) ,
+    FOREIGN KEY (MedProcedure_ID_List) REFERENCES Medprocedure(Medprocedure_ID),
+    CONSTRAINT pk_ListOfProcedure_ID PRIMARY KEY (ListOfMedProcedure_ID , MedProcedure_ID_List)
 );
 
 /*multivalue*/
@@ -155,4 +155,80 @@ CREATE TABLE UsedInPrescription(
     FOREIGN KEY (Store_ID) REFERENCES Store(Store_ID) ,
     FOREIGN KEY (Prescription_ID) REFERENCES Prescription(Prescription_ID) , 
     CONSTRAINT pk_UsedInMPrescription PRIMARY KEY (Store_ID , Prescription_ID)
+);
+
+CREATE TABLE Patient(
+	Patient_ID char(6) PRIMARY KEY,
+    Patient_First_Name char(30) NOT NULL,
+    Patient_Family_Name char(30) ,
+    DateOfBirth Date NOT NULL,
+    Gender char(1) NOT NULL,
+    PhoneNumber char(12) ,
+    BloogGroup char(3) NOT NULL
+);
+
+CREATE TABLE Patient_History(
+	Patient_ID char(6) ,
+    DATE_STAMP Date ,
+    Weight float(3) not null,
+    Height float(3) not null,
+    TemperatureBody float(2) not null,
+    BloodData int(11) not null,
+    SicknessDescription varchar(2000) not null ,
+    constraint pkHistory primary key (Patient_ID , DATE_STAMP)
+);
+
+CREATE TABLE Bill(
+	Patient_ID char(6) ,
+    Bill_ID char(7) ,
+    Bill_Date char(6) not null ,
+    Bill_Time Time not null,
+    foreign key (Patient_ID) REFERENCES Patient(Patient_ID) ,
+    constraint pkBill primary key (Patient_ID , Bill_ID)
+);
+CREATE TABLE Check_bill(
+	Bill_ID char(7) ,
+    ListOfMedProcedure_ID char(6) ,
+    Prescription_ID char(7) ,
+    constraint pkCheck_bill primary key (Bill_ID , ListOfMedProcedure_ID , Prescription_ID)
+);
+
+CREATE TABLE Appointment(
+	Patient_ID char(6) ,
+    Doctor_ID char(6) ,
+    Appointment_Date Date not null,
+    Appointment_Time Date not null,
+    Appointment_DisCription varchar(2000) ,
+    foreign key (Patient_ID) REFERENCES Patient(Patient_ID) ,
+    foreign key (Doctor_ID) REFERENCES Doctor(Doctor_ID) ,
+    constraint pkAppointment primary key (Patient_ID , Doctor_ID)
+); 
+
+CREATE TABLE Diagnose(
+	Patient_ID char(6) ,
+    Doctor_ID char(6) ,
+    DATE_STAMP Date ,
+    Diagnostc varchar(2000) ,
+    foreign key (Patient_ID) REFERENCES Patient(Patient_ID) ,
+    foreign key (Doctor_ID) REFERENCES Doctor(Doctor_ID) ,
+    constraint pkAppointment primary key (Patient_ID , Doctor_ID)
+);
+
+CREATE TABLE Medicate(
+	Doctor_ID char(6) ,
+    Prescription_ID char(6) ,
+    Patient_ID char(13) ,
+    foreign key (Prescription_ID) REFERENCES Prescription(Prescription_ID) ,
+    foreign key (Doctor_ID) REFERENCES Doctor(Doctor_ID) ,
+    foreign key (Patient_ID) REFERENCES Patient(Patient_ID)
+);
+
+CREATE TABLE relation_Procedure(
+	Doctor_ID char(6) ,
+    ListOfMedProcedure_ID char(6) ,
+    Patient_ID char(6) ,
+    foreign key (ListOfMedProcedure_ID) REFERENCES listofprocedure(ListOfMedProcedure_ID) ,
+    foreign key (Doctor_ID) REFERENCES Doctor(Doctor_ID) ,
+    foreign key (Patient_ID) REFERENCES Patient(Patient_ID)
+    
 );
