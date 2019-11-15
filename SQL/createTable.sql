@@ -159,6 +159,7 @@ CREATE TABLE UsedInPrescription(
 
 CREATE TABLE Patient(
 	Patient_ID char(6) PRIMARY KEY,
+    SSN char(13) NOT NULL ,
     Patient_First_Name char(30) NOT NULL,
     Patient_Family_Name char(30) ,
     DateOfBirth Date NOT NULL,
