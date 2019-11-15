@@ -159,13 +159,13 @@ CREATE TABLE UsedInPrescription(
 
 CREATE TABLE Patient(
 	Patient_ID char(6) PRIMARY KEY,
-    SSN char(13) NOT NULL ,
+    SSN char(13) NOT NULL,
     Patient_First_Name char(30) NOT NULL,
     Patient_Family_Name char(30) ,
     DateOfBirth Date NOT NULL,
     Gender char(1) NOT NULL,
     PhoneNumber char(12) ,
-    BloogGroup char(3) NOT NULL
+    BloodGroup char(3) NOT NULL
 );
 
 CREATE TABLE Patient_History(
