@@ -27,6 +27,10 @@ CREATE TABLE Drug(
 CREATE TABLE DrugIngredient(
     Store_ID char(4),
     Ingredients char(30),
+
+
+
+    
     FOREIGN KEY (Store_ID) REFERENCES Drug(Store_ID),
     CONSTRAINT pk_DrugIngredient PRIMARY KEY (Store_ID,Ingredients)
 );
