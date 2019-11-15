@@ -171,11 +171,11 @@ CREATE TABLE Patient(
 CREATE TABLE Patient_History(
 	Patient_ID char(6) ,
     DATE_STAMP Date ,
-    Weight float(3) not null,
-    Height float(3) not null,
-    TemperatureBody float(2) not null,
-    BloodData int(11) not null,
-    SicknessDescription varchar(2000) not null ,
+    Weight float(3) NOT NULL,
+    Height float(3) NOT NULL,
+    TemperatureBody float(2) NOT NULL,
+    BloodData int(11) NOT NULL,
+    SicknessDescription varchar(2000) NOT NULL ,
     constraint pkHistory primary key (Patient_ID , DATE_STAMP)
 );
 
