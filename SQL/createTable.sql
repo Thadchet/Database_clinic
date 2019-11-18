@@ -52,7 +52,7 @@ CREATE TABLE Doctor(
 ); 
 
 /*multivalue*/
-CREATE TABLE Docter_specialization(
+CREATE TABLE Doctor_specialization(
     Doctor_ID char(6),
     Docter_specializations char(30) ,
     FOREIGN KEY (Doctor_ID) REFERENCES Doctor(Doctor_ID) on delete cascade on update cascade,
@@ -198,7 +198,7 @@ CREATE TABLE Check_bill(
 );
 
 CREATE TABLE Appointment(
-	Appointment_ID int(3) primary key ,
+	Appointment_ID char(3) primary key ,
     Appointment_DateTime timestamp not null,
     Doctor_ID char(6) not null,
     Patient_ID char(6) not null,
