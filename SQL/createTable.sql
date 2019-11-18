@@ -18,7 +18,7 @@ CREATE TABLE Drug(
     Drug_Name char(40) NOT NULL , 
     Drug_Type char(10) NOT NULL , 
     Expire_Date Date NOT NULL,
-    Propoties varchar(200),
+    Properties varchar(200),
     MFD_Date Date ,
     Dossage int(3) ,
     FOREIGN KEY (Store_ID) REFERENCES Store(Store_ID) on delete cascade on update cascade
@@ -123,7 +123,7 @@ CREATE TABLE ListOfProcedure(
 CREATE TABLE Medprocedure(
     Medprocedure_ID char(6) PRIMARY KEY,
     Medprocedure_Name char(30) ,
-    Medprocedure_Discription varchar(2000),
+    Medprocedure_Description varchar(2000),
     Price float(6) 
 );
 
