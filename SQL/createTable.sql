@@ -200,10 +200,11 @@ CREATE TABLE Check_bill(
 CREATE TABLE Appointment(
 	Appointment_ID int(3) primary key ,
     Appointment_DateTime timestamp not null,
+    Doctor_ID char(6) not null,
+    Patient_ID char(6) not null,
     Appointment_Description varchar(2000) ,
     foreign key (Patient_ID) REFERENCES Patient(Patient_ID) on delete cascade on update cascade,
-    foreign key (Doctor_ID) REFERENCES Doctor(Doctor_ID) on delete cascade on update cascade,
-    constraint pk_Appointment primary key (Patient_ID , Doctor_ID)
+    foreign key (Doctor_ID) REFERENCES Doctor(Doctor_ID) on delete cascade on update cascade 
 ); 
 
 CREATE TABLE Diagnose(
