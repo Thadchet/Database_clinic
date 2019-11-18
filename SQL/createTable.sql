@@ -14,10 +14,10 @@ CREATE TABLE Equipment(
 
 CREATE TABLE Drug(
     Store_ID char(4),
-    Ingredient char(30),
+    Drug_Type char(10),
     Drug_Name char(40) NOT NULL , 
     Expire_Date Date NOT NULL,
-    Propoties varchar(200),
+    Properties varchar(200),
     MFD_Date Date ,
     Dossage int(3) ,
     FOREIGN KEY (Store_ID) REFERENCES Store(Store_ID)
@@ -125,7 +125,7 @@ CREATE TABLE ListOfProcedure(
 CREATE TABLE Medprocedure(
     Medprocedure_ID char(6) PRIMARY KEY,
     Medprocedure_Name char(30) ,
-    Medprocedure_Discription varchar(2000),
+    Medprocedure_Description varchar(2000),
     Price float(6) 
 );
 
@@ -186,7 +186,7 @@ CREATE TABLE Patient_History(
 CREATE TABLE Bill(
 	Patient_ID char(6) ,
     Bill_ID char(7) ,
-    Bill_Date char(6) not null ,
+    Bill_Date Date not null ,
     Bill_Time Time not null,
     foreign key (Patient_ID) REFERENCES Patient(Patient_ID) ,
     constraint pkBill primary key (Patient_ID , Bill_ID)
@@ -202,8 +202,8 @@ CREATE TABLE Appointment(
 	Patient_ID char(6) ,
     Doctor_ID char(6) ,
     Appointment_Date Date not null,
-    Appointment_Time Date not null,
-    Appointment_DisCription varchar(2000) ,
+    Appointment_Time Time not null,
+    Appointment_Description varchar(2000) ,
     foreign key (Patient_ID) REFERENCES Patient(Patient_ID) ,
     foreign key (Doctor_ID) REFERENCES Doctor(Doctor_ID) ,
     constraint pkAppointment primary key (Patient_ID , Doctor_ID)
