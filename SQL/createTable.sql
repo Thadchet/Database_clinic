@@ -111,7 +111,7 @@ CREATE TABLE Prescription_Item(/*it same as UseIn tabls ??*/
     Quantity int(4) NOT NULL,/*add Quantity*/
     FOREIGN KEY (Prescription_ID) REFERENCES Prescription(Prescription_ID) on delete cascade on update cascade, 
     FOREIGN KEY (Store_ID) REFERENCES Store(Store_ID) ,/* this should not be cascade?*/
-    CONSTRAINT pk_Prescription_Item PRIMARY KEY (Prescription_ID , MedReceipt_List)
+    CONSTRAINT pk_Prescription_Item PRIMARY KEY (Prescription_ID , Store_ID)
 );
 
 
