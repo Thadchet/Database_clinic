@@ -101,7 +101,7 @@ CREATE TABLE Prescription(
     Prescription_ID char(6) PRIMARY KEY,
     Pharmacist_ID char(6) NOT NULL,
     DATE_STAMP date NOT NULL,
-    FOREIGN KEY (Pharmacist_ID) REFERENCES Pharmacist(Pharmacist_ID) on delete cascade on update cascade/* this should not be cascade?*/
+    FOREIGN KEY (Pharmacist_ID) REFERENCES Pharmacist(Pharmacist_ID) /* this should not be cascade?*/
 );
 
 /*multivalue*/
@@ -110,7 +110,7 @@ CREATE TABLE Prescription_Item(/*it same as UseIn tabls ??*/
     Store_ID char(4),
     Quantity int(4) NOT NULL,/*add Quantity*/
     FOREIGN KEY (Prescription_ID) REFERENCES Prescription(Prescription_ID) on delete cascade on update cascade, 
-    FOREIGN KEY (Store_ID) REFERENCES Store(Store_ID) on delete cascade on update cascade,/* this should not be cascade?*/
+    FOREIGN KEY (Store_ID) REFERENCES Store(Store_ID) ,/* this should not be cascade?*/
     CONSTRAINT pk_Prescription_Item PRIMARY KEY (Prescription_ID , MedReceipt_List)
 );
 
@@ -127,8 +127,8 @@ CREATE TABLE Medprocedure_Item(/*it same as UseIn tabls ??*/
     Medprocedure_ID char(6) ,
     Store_ID char(4) ,
     FOREIGN KEY (Medprocedure_ID) REFERENCES Medprocedure(Medprocedure_ID) on delete cascade on update cascade,
-    FOREIGN KEY (Store_ID) REFERENCES Store(Store_ID) on delete cascade on update cascade, /* this should not be cascade?*/
-    CONSTRAINT pk_Medprocedure_ID_Item PRIMARY KEY (Medprocedure_ID , ItemRequirement)
+    FOREIGN KEY (Store_ID) REFERENCES Store(Store_ID),  /* this should not be cascade?*/
+    CONSTRAINT pk_Medprocedure_ID_Item PRIMARY KEY (Medprocedure_ID , Store_ID)
 );
 
 
@@ -136,7 +136,7 @@ CREATE TABLE ListOfProcedure(
     ListOfMedProcedure_ID char(6) PRIMARY KEY,
     Nurse_ID char(6) ,
     DATE_STAMP date NOT NULL,
-    FOREIGN KEY (Nurse_ID) REFERENCES Nurse(Nurse_ID) on delete cascade on update cascade /* this should not be cascade?*/
+    FOREIGN KEY (Nurse_ID) REFERENCES Nurse(Nurse_ID) /* this should not be cascade?*/
 );
 
 /*multivalue*/
@@ -144,7 +144,7 @@ CREATE TABLE ListOfProcedure_ID(
     ListOfMedProcedure_ID char(6) ,
     Medprocedure_ID char(6) ,
     FOREIGN KEY (ListOfMedProcedure_ID) REFERENCES ListOfProcedure(ListOfMedProcedure_ID) on delete cascade on update cascade, /*add foreign key*/
-    FOREIGN KEY (MedProcedure_ID) REFERENCES Medprocedure(Medprocedure_ID) on delete cascade on update cascade, /* this should not be cascade?*/
+    FOREIGN KEY (MedProcedure_ID) REFERENCES Medprocedure(Medprocedure_ID) , /* this should not be cascade?*/
     CONSTRAINT pk_ListOfProcedure_ID PRIMARY KEY (ListOfMedProcedure_ID , MedProcedure_ID)
 );
 
@@ -152,16 +152,16 @@ CREATE TABLE ListOfProcedure_ID(
 CREATE TABLE UsedInMedProcedure(
     Store_ID char(6) ,
     Medprocedure_ID char(6) ,
-    FOREIGN KEY (Store_ID) REFERENCES Store(Store_ID) on delete cascade on update cascade, /* this should not be cascade?*/
-    FOREIGN KEY (Medprocedure_ID) REFERENCES Medprocedure(Medprocedure_ID) on delete cascade on update cascade, /* this should not be cascade?*/
+    FOREIGN KEY (Store_ID) REFERENCES Store(Store_ID) , /* this should not be cascade?*/
+    FOREIGN KEY (Medprocedure_ID) REFERENCES Medprocedure(Medprocedure_ID) , /* this should not be cascade?*/
     CONSTRAINT pk_UsedInMedProcedure PRIMARY KEY (Store_ID , Medprocedure_ID)
 );
  
 CREATE TABLE UsedInPrescription(
     Store_ID char(6) ,
     Prescription_ID char(6) ,
-    FOREIGN KEY (Store_ID) REFERENCES Store(Store_ID) on delete cascade on update cascade, /* this should not be cascade?*/
-    FOREIGN KEY (Prescription_ID) REFERENCES Prescription(Prescription_ID) on delete cascade on update cascade, /* this should not be cascade?*/
+    FOREIGN KEY (Store_ID) REFERENCES Store(Store_ID) , /* this should not be cascade?*/
+    FOREIGN KEY (Prescription_ID) REFERENCES Prescription(Prescription_ID) , /* this should not be cascade?*/
     CONSTRAINT pk_UsedInMPrescription PRIMARY KEY (Store_ID , Prescription_ID)
 );
 
@@ -193,15 +193,15 @@ CREATE TABLE Bill(
     Bill_ID char(7) primary key ,
 	Patient_ID char(6) ,
     Time_Stamp TIMESTAMP not null,/*change attribute name*/
-    foreign key (Patient_ID) REFERENCES Patient(Patient_ID) on delete cascade on update cascade, /* this should not be cascade?*/
+    foreign key (Patient_ID) REFERENCES Patient(Patient_ID) , /* this should not be cascade?*/
 );
 CREATE TABLE Check_bill(
 	Bill_ID char(7) ,
     ListOfMedProcedure_ID char(6) ,
     Prescription_ID char(7) ,
-    FOREIGN KEY (Bill_ID) REFERENCES Bill(Bill_ID) on delete cascade on update cascade, /* this should not be cascade?*/
-    FOREIGN KEY (ListOfMedProcedure_ID) REFERENCES ListOfProcedure(ListOfMedProcedure_ID) on delete cascade on update cascade, /* this should not be cascade?*/
-    FOREIGN KEY (Prescription_ID) REFERENCES Prescription(Prescription_ID) on delete cascade on update cascade, /* this should not be cascade?*/
+    FOREIGN KEY (Bill_ID) REFERENCES Bill(Bill_ID) , /* this should not be cascade?*/
+    FOREIGN KEY (ListOfMedProcedure_ID) REFERENCES ListOfProcedure(ListOfMedProcedure_ID) , /* this should not be cascade?*/
+    FOREIGN KEY (Prescription_ID) REFERENCES Prescription(Prescription_ID) , /* this should not be cascade?*/
     constraint pk_Check_bill primary key (Bill_ID , ListOfMedProcedure_ID , Prescription_ID)
 );
 
@@ -211,8 +211,8 @@ CREATE TABLE Appointment(
     Doctor_ID char(6) not null,
     Patient_ID char(6) not null,
     Appointment_Description varchar(2000) ,
-    foreign key (Patient_ID) REFERENCES Patient(Patient_ID) on delete cascade on update cascade,
-    foreign key (Doctor_ID) REFERENCES Doctor(Doctor_ID) on delete cascade on update cascade 
+    foreign key (Patient_ID) REFERENCES Patient(Patient_ID) ,/* this should not be cascade?*/
+    foreign key (Doctor_ID) REFERENCES Doctor(Doctor_ID) /* this should not be cascade?*/
 ); 
 
 CREATE TABLE Diagnose(
@@ -220,8 +220,8 @@ CREATE TABLE Diagnose(
     Doctor_ID char(6) ,
     DATE_STAMP Date ,
     Diagnostc varchar(2000) ,
-    foreign key (Patient_ID) REFERENCES Patient(Patient_ID) on delete cascade on update cascade,
-    foreign key (Doctor_ID) REFERENCES Doctor(Doctor_ID) on delete cascade on update cascade,
+    foreign key (Patient_ID) REFERENCES Patient(Patient_ID) ,/* this should not be cascade?*/
+    foreign key (Doctor_ID) REFERENCES Doctor(Doctor_ID) ,/* this should not be cascade?*/
     constraint pk_Diagnose primary key (Patient_ID , Doctor_ID, DATE_STAMP)
 );
 
@@ -229,9 +229,9 @@ CREATE TABLE Medicate(
 	Doctor_ID char(6) ,
     Prescription_ID char(6) ,
     Patient_ID char(13) ,
-    foreign key (Prescription_ID) REFERENCES Prescription(Prescription_ID) on delete cascade on update cascade,
-    foreign key (Doctor_ID) REFERENCES Doctor(Doctor_ID) on delete cascade on update cascade,
-    foreign key (Patient_ID) REFERENCES Patient(Patient_ID) on delete cascade on update cascade,
+    foreign key (Prescription_ID) REFERENCES Prescription(Prescription_ID) ,/* this should not be cascade?*/
+    foreign key (Doctor_ID) REFERENCES Doctor(Doctor_ID) ,/* this should not be cascade?*/
+    foreign key (Patient_ID) REFERENCES Patient(Patient_ID) ,/* this should not be cascade?*/
     constraint pk_Medicate primary key (Patient_ID , Doctor_ID , Prescription_ID)
 );
 
@@ -239,9 +239,9 @@ CREATE TABLE relation_Procedure(
 	Doctor_ID char(6) ,
     ListOfMedProcedure_ID char(6) ,
     Patient_ID char(6) ,
-    foreign key (ListOfMedProcedure_ID) REFERENCES listofprocedure(ListOfMedProcedure_ID) on delete cascade,
-    foreign key (Doctor_ID) REFERENCES Doctor(Doctor_ID) on delete cascade on update cascade,
-    foreign key (Patient_ID) REFERENCES Patient(Patient_ID) on delete cascade on update cascade,
+    foreign key (ListOfMedProcedure_ID) REFERENCES listofprocedure(ListOfMedProcedure_ID) ,/* this should not be cascade?*/
+    foreign key (Doctor_ID) REFERENCES Doctor(Doctor_ID) ,/* this should not be cascade?*/
+    foreign key (Patient_ID) REFERENCES Patient(Patient_ID) ,/* this should not be cascade?*/
     constraint pk_Procedure primary key (Patient_ID , Doctor_ID , ListOfMedProcedure_ID)
 );
 
